@@ -11,7 +11,7 @@
 		public TextAsset faces;
 		public TextAsset eyes;
 		public TextAsset shapes;
-
+		public GameObject face;
 		private FaceProcessorLive<WebCamTexture> processor;
 
 		/// <summary>
@@ -57,7 +57,7 @@
 		/// Per-frame video capture processor
 		/// </summary>
 		protected override bool ProcessTexture(WebCamTexture input, ref Texture2D output)
-		{
+		{//ウェブカメラの映像からテクスチャを取得→顔認識をかける→結果をもとに顔を四角くマークする、というもの(WebCamera.csを継承する形で最終画像を出力するprocess部分を書き換えている)
 			// detect everything we're interested in
 			processor.ProcessTexture(input, TextureParameters);
 
@@ -66,7 +66,8 @@
 
 			// processor.Image now holds data we'd like to visualize
 			output = Unity.MatToTexture(processor.Image, output);   // if output is valid texture it's buffer will be re-used, otherwise it will be re-created
-
+			//Image face_image=face.GetComponent<Image>();
+			//output = Unity.MatToTexture(face_image, output);
 			return true;
 		}
 	}
